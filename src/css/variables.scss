@@ -1,0 +1,9 @@
+$main: #4e8fff;
+$font: #666;
+$border: #e8ebee;
+
+@function size($val: 1) {
+  @return $val * 1px;
+}
+
+$border-radius: size(3);

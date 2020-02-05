@@ -1,0 +1,101 @@
+.react-file-input-wrapper {
+  @import './variables';
+
+  display: inline-block;
+  color: $font;
+
+  .react-file-input {
+    display: inline-block;
+    position: relative;
+    width: size(120);
+    height: size(120);
+    margin: 0 size(10) 0 0;
+    line-height: size(118);
+    text-align: center;
+    border: 1px solid $border;
+    border-radius: $border-radius;
+    cursor: pointer;
+    vertical-align: middle;
+    overflow: hidden;
+
+    &:hover {
+      .react-file-add {
+        opacity: 1;
+      }
+
+      .react-file-info-wrapper {
+        max-height: size(120);
+        line-height: size(120);
+      }
+
+      .react-file-del-icon {
+        display: inline-block !important;
+      }
+
+      .react-file-delete {
+        opacity: 1 !important;
+      }
+
+      .react-file-name {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        opacity: 0.7;
+      }
+    }
+
+    .react-file-add {
+      width: 3em;
+      opacity: 0.8;
+      vertical-align: middle;
+    }
+
+    svg.react-file-img {
+      width: 61.8%;
+      vertical-align: middle;
+    }
+
+    .react-file-img {
+      max-width: 100%;
+      max-height: 100%;
+      color: $main;
+    }
+
+    .react-file-info-wrapper {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      max-height: size(20);
+      line-height: size(20);
+      color: #fff;
+      background: rgba(#000, 0.5);
+      font-size: size(12);
+      //transition: all 0.3s ease;
+
+      .react-file-name {
+        box-sizing: border-box;
+        display: inline-block;
+        max-width: 100%;
+        padding: 0 size(5);
+        line-height: size(20);
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+
+      .react-file-del-icon {
+        display: none;
+        padding: 0 1em;
+      }
+
+      .react-file-delete {
+        width: 2.4em;
+        vertical-align: middle;
+        opacity: 0;
+        //transition: all 0.3s ease;
+      }
+    }
+  }
+}
