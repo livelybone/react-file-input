@@ -4,6 +4,35 @@
   display: inline-block;
   color: $font;
 
+  &.readonly {
+    .react-file-input {
+      cursor: default;
+
+      .react-file-add {
+        color: $font-light;
+        opacity: 1;
+      }
+
+      &:hover {
+        border-color: $border;
+
+        .react-file-info-wrapper {
+          max-height: size(20);
+          line-height: size(20);
+        }
+
+        .react-file-del-icon {
+          display: none !important;
+        }
+
+        .react-file-name {
+          position: relative;
+          opacity: 1;
+        }
+      }
+    }
+  }
+
   .react-file-input {
     display: inline-block;
     position: relative;
@@ -19,6 +48,8 @@
     overflow: hidden;
 
     &:hover {
+      border-color: $border-darker;
+
       .react-file-add {
         opacity: 1;
       }
@@ -53,7 +84,7 @@
     }
 
     .react-file-add {
-      width: 3em;
+      width: 2.6em;
       opacity: 0.8;
       vertical-align: middle;
     }
@@ -88,7 +119,7 @@
       max-height: size(20);
       line-height: size(20);
       color: #fff;
-      background: rgba(#000, 0.5);
+      background: rgba(#000, 0.4);
       font-size: size(12);
       //transition: all 0.3s ease;
 

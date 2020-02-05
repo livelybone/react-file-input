@@ -56,6 +56,7 @@ const App = () => {
         onFileClick={(file, i, files) => console.log(file, i, files)}
         files={files}
         multiple={true}
+        readonly={true}
         accept="image/png"
         tip="upload tips"
       />

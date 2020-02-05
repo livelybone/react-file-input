@@ -1,6 +1,8 @@
 $main: #4e8fff;
 $font: #666;
+$font-light: #999;
 $border: #e8ebee;
+$border-darker: #dadde0;
 
 @function size($val: 1) {
   @return $val * 1px;

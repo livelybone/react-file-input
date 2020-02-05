@@ -10,7 +10,7 @@ export default class FileInput extends Component<
   inputEl!: HTMLInputElement
 
   render() {
-    const { id, accept, tip, onChange } = this.props
+    const { id, accept, tip, readonly, onChange } = this.props
     return (
       <label
         className={`react-file-input${tip ? ' has-tip' : ''}`}
@@ -24,6 +24,7 @@ export default class FileInput extends Component<
           id={id}
           ref={ref => (this.inputEl = ref!)}
           accept={accept}
+          readOnly={readonly}
           onChange={ev => {
             onChange(ev.target.files && ev.target.files[0])
             ev.target.value = ''

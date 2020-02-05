@@ -13,6 +13,7 @@ declare type FileType =
 interface FileInputProps {
   id: string
   accept?: string
+  readonly?: boolean
   tip?: ReactNode
 
   onChange(file: File | null): void
@@ -40,6 +41,7 @@ interface ReactFileInputProps {
   files?: FileType[]
   multiple?: boolean
   tip?: ReactNode
+  readonly?: boolean
 
   beforeDelete?(file: DisplayFile): Promise<boolean> | boolean
 

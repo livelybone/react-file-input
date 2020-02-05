@@ -18,6 +18,11 @@ export default class ReactFileInput extends Component<
       files: [],
     }
     this.id = props.id || simpleUniqueId()
+    if (props.files) {
+      convertFiles(props.files).then(files => {
+        this.setState({ files })
+      })
+    }
   }
 
   setFiles(files: DisplayFile[]) {
@@ -40,10 +45,14 @@ export default class ReactFileInput extends Component<
   }
 
   render() {
-    const { beforeDelete, onFileClick, multiple, tip } = this.props
+    const { beforeDelete, onFileClick, multiple, readonly, tip } = this.props
 
     return multiple ? (
-      <div className="react-file-input-wrapper multiple">
+      <div
+        className={`react-file-input-wrapper multiple${
+          readonly ? ' readonly' : ''
+        }`}
+      >
         {this.state.files.map((file, i) => (
           <FileDisplay
             file={file}
@@ -57,22 +66,25 @@ export default class ReactFileInput extends Component<
             }
           />
         ))}
-        <FileInput
-          id={this.id}
-          tip={tip}
-          onChange={file => {
-            if (file) {
-              blobToBase64(file).then(url => {
-                this.setFiles(
-                  this.state.files.concat([{ file, url, name: file.name }]),
-                )
-              })
-            }
-          }}
-        />
+        {(!readonly || this.state.files.length < 1) && (
+          <FileInput
+            id={this.id}
+            tip={tip}
+            readonly={readonly}
+            onChange={file => {
+              if (file) {
+                blobToBase64(file).then(url => {
+                  this.setFiles(
+                    this.state.files.concat([{ file, url, name: file.name }]),
+                  )
+                })
+              }
+            }}
+          />
+        )}
       </div>
     ) : (
-      <div className="react-file-input-wrapper">
+      <div className={`react-file-input-wrapper${readonly ? ' readonly' : ''}`}>
         {this.state.files[0] ? (
           <FileDisplay
             file={this.state.files[0]}
@@ -89,6 +101,7 @@ export default class ReactFileInput extends Component<
           <FileInput
             id={this.id}
             tip={tip}
+            readonly={readonly}
             onChange={file => {
               if (file) {
                 blobToBase64(file).then(url => {

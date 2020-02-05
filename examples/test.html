@@ -25,7 +25,7 @@ const Comp = ReactFileInput
 
 const App = () => {
   const [state, setState] = React.useState({})
-  const [files, setFiles] = React.useState([])
+  const [files, setFiles] = React.useState([{ name: '123', url: '123' }])
 
   return (
     <div>
@@ -38,6 +38,7 @@ const App = () => {
         onFileClick={(file, i, files) => console.log(file, i, files)}
         files={files}
         multiple={true}
+        readonly={true}
         accept="image/png"
         tip="upload tips"
       />
