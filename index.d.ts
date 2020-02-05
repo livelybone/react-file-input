@@ -38,6 +38,9 @@ interface FileDisplayProps {
 interface ReactFileInputProps {
   id?: string
   accept?: string
+  /**
+   * If this prop is provided, it means the component is controlled
+   * */
   files?: FileType[]
   multiple?: boolean
   tip?: ReactNode
@@ -61,10 +64,13 @@ declare class ReactFileInput extends Component<
   }
 > {
   id: string
+  controlled: boolean
 
   constructor(props: ReactFileInputProps)
 
   setFiles(files: DisplayFile[]): void
+
+  fileInput(file: File | null): void
 
   componentDidUpdate(
     prevProps: Readonly<ReactFileInputProps>,

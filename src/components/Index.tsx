@@ -4,20 +4,36 @@ import FileInput from './FileInput'
 import simpleUniqueId from '@livelybone/simple-unique-id'
 import FileDisplay from './FileDisplay'
 import { blobToBase64 } from 'base64-blob'
-import { convertFiles } from '../utils/utils'
+import { convertFiles, isImg } from '../utils/utils'
 
 export default class ReactFileInput extends Component<
   ReactFileInputProps,
   { files: DisplayFile[] }
 > {
   id!: string
+  controlled = false
 
   constructor(props: ReactFileInputProps) {
     super(props)
     this.state = {
       files: [],
     }
+
     this.id = props.id || simpleUniqueId()
+    this.controlled = 'files' in props
+    if (this.controlled) {
+      if (!('onChange' in props) || typeof props.onChange !== 'function') {
+        console.error(
+          'react-file-input: You provided a `files` prop to the component without an `onChange` handler. This will render a read-only field',
+        )
+      } else {
+        // eslint-disable-next-line no-console
+        console.log(
+          'react-file-input: The `files` prop is provided, it means the component is controlled, and you must provide `onChange` handler to handle the files change of the component',
+        )
+      }
+    }
+
     if (props.files) {
       convertFiles(props.files).then(files => {
         this.setState({ files })
@@ -27,9 +43,30 @@ export default class ReactFileInput extends Component<
 
   setFiles(files: DisplayFile[]) {
     const { onChange } = this.props
-    this.setState({ files }, () => {
-      onChange && onChange(this.state.files)
-    })
+    if (this.controlled) {
+      onChange && onChange(files)
+    } else {
+      this.setState({ files }, () => {
+        onChange && onChange(this.state.files)
+      })
+    }
+  }
+
+  fileInput(file: File | null) {
+    if (file) {
+      ;(!this.controlled && isImg(file)
+        ? blobToBase64(file)
+        : Promise.resolve('')
+      ).then(url => {
+        if (!this.props.multiple)
+          this.setFiles([{ file, url, name: file.name }])
+        else {
+          this.setFiles(
+            this.state.files.concat([{ file, url, name: file.name }]),
+          )
+        }
+      })
+    }
   }
 
   componentDidUpdate(
@@ -47,70 +84,45 @@ export default class ReactFileInput extends Component<
   render() {
     const { beforeDelete, onFileClick, multiple, readonly, tip } = this.props
 
+    const display = (multiple
+      ? this.state.files
+      : this.state.files.slice(0, 1)
+    ).map((file, i) => (
+      <FileDisplay
+        file={file}
+        key={i}
+        onDelete={() =>
+          this.setFiles(this.state.files.filter((f, index) => index !== i))
+        }
+        beforeDelete={() => (beforeDelete ? beforeDelete(file) : true)}
+        onFileClick={() =>
+          onFileClick && onFileClick(file, i, this.state.files)
+        }
+      />
+    ))
+
+    const input = (
+      <FileInput
+        id={this.id}
+        tip={tip}
+        readonly={readonly}
+        onChange={this.fileInput.bind(this)}
+      />
+    )
+
     return multiple ? (
       <div
         className={`react-file-input-wrapper multiple${
           readonly ? ' readonly' : ''
         }`}
       >
-        {this.state.files.map((file, i) => (
-          <FileDisplay
-            file={file}
-            key={i}
-            onDelete={() =>
-              this.setFiles(this.state.files.filter((f, index) => index !== i))
-            }
-            beforeDelete={() => (beforeDelete ? beforeDelete(file) : true)}
-            onFileClick={() =>
-              onFileClick && onFileClick(file, i, this.state.files)
-            }
-          />
-        ))}
-        {(!readonly || this.state.files.length < 1) && (
-          <FileInput
-            id={this.id}
-            tip={tip}
-            readonly={readonly}
-            onChange={file => {
-              if (file) {
-                blobToBase64(file).then(url => {
-                  this.setFiles(
-                    this.state.files.concat([{ file, url, name: file.name }]),
-                  )
-                })
-              }
-            }}
-          />
-        )}
+        {display}
+        {(!readonly || this.state.files.length < 1) && input}
       </div>
     ) : (
       <div className={`react-file-input-wrapper${readonly ? ' readonly' : ''}`}>
-        {this.state.files[0] ? (
-          <FileDisplay
-            file={this.state.files[0]}
-            onDelete={() => this.setFiles([])}
-            beforeDelete={() =>
-              beforeDelete ? beforeDelete(this.state.files[0]) : true
-            }
-            onFileClick={() =>
-              onFileClick &&
-              onFileClick(this.state.files[0], 0, this.state.files)
-            }
-          />
-        ) : (
-          <FileInput
-            id={this.id}
-            tip={tip}
-            readonly={readonly}
-            onChange={file => {
-              if (file) {
-                blobToBase64(file).then(url => {
-                  this.setFiles([{ file, url, name: file.name }])
-                })
-              }
-            }}
-          />
-        )}
+        {display}
+        {this.state.files.length < 1 && input}
       </div>
     )
   }

@@ -33,6 +33,10 @@ export interface FileDisplayProps {
 export interface ReactFileInputProps {
   id?: string
   accept?: string
+
+  /**
+   * If this prop is provided, it means the component is controlled
+   * */
   files?: FileType[]
   multiple?: boolean
   tip?: ReactNode
