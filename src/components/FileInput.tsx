@@ -18,18 +18,19 @@ export default class FileInput extends Component<
       >
         <Add />
         {tip && <span className="react-file-input-tip">{tip}</span>}
-        <input
-          type="file"
-          hidden
-          id={id}
-          ref={ref => (this.inputEl = ref!)}
-          accept={accept}
-          readOnly={readonly}
-          onChange={ev => {
-            onChange(ev.target.files && ev.target.files[0])
-            ev.target.value = ''
-          }}
-        />
+        {!readonly && (
+          <input
+            type="file"
+            hidden
+            id={id}
+            ref={ref => (this.inputEl = ref!)}
+            accept={accept}
+            onChange={ev => {
+              onChange(ev.target.files && ev.target.files[0])
+              ev.target.value = ''
+            }}
+          />
+        )}
       </label>
     )
   }
