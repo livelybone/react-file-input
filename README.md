@@ -24,7 +24,7 @@ Your can see the usage by run the example of the module, here is the step:
 2. Go to the directory `cd your-module-directory`
 3. Install npm dependencies `npm i`(use taobao registry: `npm i --registry=http://registry.npm.taobao.org`)
 4. Open service `npm run dev`
-5. See the example(usually is `http://127.0.0.1/examples/test.html`) in your browser
+5. See the example(usually is `http://127.0.0.1:3000/examples/test.html`) in your browser
 
 ## Installation
 ```bash
@@ -40,6 +40,28 @@ See what method or params you can use in [index.d.ts](./index.d.ts)
 ## Usage
 ```js
 import ReactFileInput from '@livelybone/react-file-input'
+
+const App = () => {
+  const [state, setState] = React.useState({})
+  const [files, setFiles] = React.useState([])
+
+  return (
+    <div>
+      <Comp
+        beforeDelete={() => new Promise(res => setTimeout(() => res(true),1000))}
+        onChange={(val) => {
+          setFiles(val)
+          console.log(val)
+        }}
+        onFileClick={(file, i, files) => console.log(file, i, files)}
+        files={files}
+        multiple={true}
+        accept="image/png"
+        tip="upload tips"
+      />
+    </div>
+  )
+}
 ```
 
 Use in html, see what your can use in [CDN: unpkg](https://unpkg.com/@livelybone/react-file-input/lib/umd/)

@@ -1,4 +1,4 @@
-import { Component } from 'react'
+import { Component, ReactNode } from 'react'
 
 declare type FileType =
   | File
@@ -10,10 +10,28 @@ declare type FileType =
       url: string
     }
 
+interface FileInputProps {
+  id: string
+  accept?: string
+  tip?: ReactNode
+
+  onChange(file: File | null): void
+}
+
 interface DisplayFile {
   name?: string
   url: string
   file?: File | Blob
+}
+
+interface FileDisplayProps {
+  file: DisplayFile
+
+  beforeDelete(): Promise<boolean> | boolean
+
+  onDelete(): void
+
+  onFileClick(): void
 }
 
 interface ReactFileInputProps {
@@ -21,6 +39,7 @@ interface ReactFileInputProps {
   accept?: string
   files?: FileType[]
   multiple?: boolean
+  tip?: ReactNode
 
   beforeDelete?(file: DisplayFile): Promise<boolean> | boolean
 
@@ -57,3 +76,10 @@ declare class ReactFileInput extends Component<
 }
 
 export default ReactFileInput
+export {
+  DisplayFile,
+  FileDisplayProps,
+  FileInputProps,
+  FileType,
+  ReactFileInputProps,
+}

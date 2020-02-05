@@ -40,7 +40,7 @@ export default class ReactFileInput extends Component<
   }
 
   render() {
-    const { beforeDelete, onFileClick, multiple } = this.props
+    const { beforeDelete, onFileClick, multiple, tip } = this.props
 
     return multiple ? (
       <div className="react-file-input-wrapper multiple">
@@ -59,6 +59,7 @@ export default class ReactFileInput extends Component<
         ))}
         <FileInput
           id={this.id}
+          tip={tip}
           onChange={file => {
             if (file) {
               blobToBase64(file).then(url => {
@@ -87,6 +88,7 @@ export default class ReactFileInput extends Component<
         ) : (
           <FileInput
             id={this.id}
+            tip={tip}
             onChange={file => {
               if (file) {
                 blobToBase64(file).then(url => {

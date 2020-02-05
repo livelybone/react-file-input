@@ -39,7 +39,29 @@ npm i -S @livelybone/react-file-input
 
 ## Usage
 ```js
-import * as ReactFileInput from '@livelybone/react-file-input'
+import ReactFileInput from '@livelybone/react-file-input'
+
+const App = () => {
+  const [state, setState] = React.useState({})
+  const [files, setFiles] = React.useState([])
+
+  return (
+    <div>
+      <Comp
+        beforeDelete={() => new Promise(res => setTimeout(() => res(true),1000))}
+        onChange={(val) => {
+          setFiles(val)
+          console.log(val)
+        }}
+        onFileClick={(file, i, files) => console.log(file, i, files)}
+        files={files}
+        multiple={true}
+        accept="image/png"
+        tip="upload tips"
+      />
+    </div>
+  )
+}
 ```
 
 在 HTML 文件中直接引用，你可以在 [CDN: unpkg](https://unpkg.com/@livelybone/react-file-input/lib/umd/) 看到你能用到的所有 js 脚本

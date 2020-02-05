@@ -1,3 +1,5 @@
+import { ReactNode } from 'react'
+
 export type FileType =
   | File
   | (Blob & { name?: string })
@@ -6,6 +8,7 @@ export type FileType =
 export interface FileInputProps {
   id: string
   accept?: string
+  tip?: ReactNode
 
   onChange(file: File | null): void
 }
@@ -31,6 +34,7 @@ export interface ReactFileInputProps {
   accept?: string
   files?: FileType[]
   multiple?: boolean
+  tip?: ReactNode
 
   beforeDelete?(file: DisplayFile): Promise<boolean> | boolean
 

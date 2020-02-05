@@ -10,10 +10,14 @@ export default class FileInput extends Component<
   inputEl!: HTMLInputElement
 
   render() {
-    const { id, accept, onChange } = this.props
+    const { id, accept, tip, onChange } = this.props
     return (
-      <label className="react-file-input" htmlFor={id}>
+      <label
+        className={`react-file-input${tip ? ' has-tip' : ''}`}
+        htmlFor={id}
+      >
         <Add />
+        {tip && <span className="react-file-input-tip">{tip}</span>}
         <input
           type="file"
           hidden

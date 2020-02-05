@@ -45,10 +45,28 @@
       }
     }
 
+    &.has-tip {
+      .react-file-add {
+        position: relative;
+        top: size(-10);
+      }
+    }
+
     .react-file-add {
       width: 3em;
       opacity: 0.8;
       vertical-align: middle;
+    }
+
+    .react-file-input-tip {
+      position: absolute;
+      left: 8%;
+      right: 8%;
+      top: calc(50% + 1.5em + #{size(5)});
+      font-size: size(12);
+      line-height: size(16);
+      white-space: pre-wrap;
+      text-align: center;
     }
 
     svg.react-file-img {
