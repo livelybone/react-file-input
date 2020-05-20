@@ -1,7 +1,7 @@
 # @livelybone/react-file-input
 [![NPM Version](http://img.shields.io/npm/v/@livelybone/react-file-input.svg?style=flat-square)](https://www.npmjs.com/package/@livelybone/react-file-input)
 [![Download Month](http://img.shields.io/npm/dm/@livelybone/react-file-input.svg?style=flat-square)](https://www.npmjs.com/package/@livelybone/react-file-input)
-![gzip with dependencies: kb](https://img.shields.io/badge/gzip--with--dependencies-kb-brightgreen.svg "gzip with dependencies: kb")
+![gzip with dependencies: 4kb](https://img.shields.io/badge/gzip--with--dependencies-4kb-brightgreen.svg "gzip with dependencies: 4kb")
 ![typescript](https://img.shields.io/badge/typescript-supported-blue.svg "typescript")
 ![pkg.module](https://img.shields.io/badge/pkg.module-supported-blue.svg "pkg.module")
 
