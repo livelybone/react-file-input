@@ -1,9 +1,14 @@
 import { ReactNode } from 'react'
 
-export type FileType =
-  | File
-  | (Blob & { name?: string })
-  | { name?: string; url: string }
+export type CFile = File | (Blob & { name?: string })
+
+export interface DisplayFile {
+  name?: string
+  url: string
+  file?: CFile
+}
+
+export type FileType = CFile | string | DisplayFile
 
 export interface FileInputProps {
   id: string
@@ -14,14 +19,12 @@ export interface FileInputProps {
   onChange(file: File | null): void
 }
 
-export interface DisplayFile {
-  name?: string
-  url: string
-  file?: File | Blob
-}
-
 export interface FileDisplayProps {
   file: DisplayFile
+
+  uploading: boolean
+
+  uploadingContent: ReactNode
 
   beforeDelete(): Promise<boolean> | boolean
 
@@ -41,6 +44,8 @@ export interface ReactFileInputProps {
   multiple?: boolean
   tip?: ReactNode
   readonly?: boolean
+  uploading?: boolean
+  uploadingContent?: ReactNode
 
   beforeDelete?(file: DisplayFile): Promise<boolean> | boolean
 

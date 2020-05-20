@@ -84,13 +84,14 @@ export default class ReactFileInput extends Component<
   render() {
     const { beforeDelete, onFileClick, multiple, readonly, tip } = this.props
 
-    const display = (multiple
-      ? this.state.files
-      : this.state.files.slice(0, 1)
-    ).map((file, i) => (
+    const files = multiple ? this.state.files : this.state.files.slice(0, 1)
+
+    const display = files.map((file, i) => (
       <FileDisplay
         file={file}
         key={i}
+        uploading={!!this.props.uploading && i === files.length - 1}
+        uploadingContent={this.props.uploadingContent || 'uploading...'}
         onDelete={() =>
           this.setFiles(this.state.files.filter((f, index) => index !== i))
         }

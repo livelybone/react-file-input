@@ -5,10 +5,21 @@ import { Delete, FileImg } from './Icons'
 
 export default class FileDisplay extends Component<FileDisplayProps> {
   render() {
-    const { file, beforeDelete, onDelete, onFileClick } = this.props
+    const {
+      file,
+      uploading,
+      uploadingContent,
+      beforeDelete,
+      onDelete,
+      onFileClick,
+    } = this.props
+    const isImage = isImg(file)
     return (
-      <div className="react-file-input react-file-display" title={file.name}>
-        {isImg(file) ? (
+      <div
+        className={`react-file-display ${isImage ? 'is-image' : ''}`}
+        title={file.name}
+      >
+        {isImage ? (
           <img
             className="react-file-img"
             src={file.url}
@@ -31,6 +42,7 @@ export default class FileDisplay extends Component<FileDisplayProps> {
           </span>
           {file.name && <span className="react-file-name">{file.name}</span>}
         </span>
+        {uploading && <div className="uploading">{uploadingContent}</div>}
       </div>
     )
   }

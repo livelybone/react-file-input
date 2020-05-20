@@ -34,6 +34,11 @@
   }
 
   .react-file-input {
+    cursor: pointer;
+  }
+
+  .react-file-input,
+  .react-file-display {
     display: inline-block;
     position: relative;
     width: size(120);
@@ -43,7 +48,6 @@
     text-align: center;
     border: 1px solid $border;
     border-radius: $border-radius;
-    cursor: pointer;
     vertical-align: middle;
     overflow: hidden;
 
@@ -52,11 +56,6 @@
 
       .react-file-add {
         opacity: 1;
-      }
-
-      .react-file-info-wrapper {
-        max-height: size(120);
-        line-height: size(120);
       }
 
       .react-file-del-icon {
@@ -68,11 +67,7 @@
       }
 
       .react-file-name {
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        opacity: 0.7;
+        display: none !important;
       }
     }
 
@@ -81,6 +76,17 @@
         position: relative;
         top: size(-10);
       }
+    }
+
+    .uploading {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      font-size: 0.8em;
+      color: #fff;
+      background: rgba(#000, 0.5);
     }
 
     .react-file-add {
@@ -94,7 +100,7 @@
       left: 8%;
       right: 8%;
       top: calc(50% + 1.5em + #{size(5)});
-      font-size: size(12);
+      font-size: 0.8em;
       line-height: size(16);
       white-space: pre-wrap;
       text-align: center;
@@ -109,6 +115,7 @@
       max-width: 100%;
       max-height: 100%;
       color: $main;
+      cursor: pointer;
     }
 
     .react-file-info-wrapper {
@@ -120,7 +127,7 @@
       line-height: size(20);
       color: #fff;
       background: rgba(#000, 0.4);
-      font-size: size(12);
+      font-size: 0.8em;
       //transition: all 0.3s ease;
 
       .react-file-name {
@@ -137,10 +144,11 @@
       .react-file-del-icon {
         display: none;
         padding: 0 1em;
+        cursor: pointer;
       }
 
       .react-file-delete {
-        width: 2.4em;
+        width: 1em;
         vertical-align: middle;
         opacity: 0;
         //transition: all 0.3s ease;
