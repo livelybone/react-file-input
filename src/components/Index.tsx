@@ -121,7 +121,11 @@ export default class ReactFileInput extends Component<
         {(!readonly || this.state.files.length < 1) && input}
       </div>
     ) : (
-      <div className={`react-file-input-wrapper${readonly ? ' readonly' : ''}`}>
+      <div
+        className={`react-file-input-wrapper${
+          readonly ? ' readonly' : ''
+        } ${this.props.className || ''}`}
+      >
         {display}
         {this.state.files.length < 1 && input}
       </div>
