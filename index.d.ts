@@ -60,6 +60,22 @@ interface ReactFileInputProps {
   ): void
 }
 
+declare class FileInput extends Component<
+  FileInputProps,
+  {
+    file?: {
+      name: string
+      url: string
+    }
+  }
+> {
+  state: {}
+  inputEl: HTMLInputElement
+  labelEl: HTMLLabelElement
+
+  render(): JSX.Element
+}
+
 declare class ReactFileInput extends Component<
   ReactFileInputProps,
   {
@@ -68,6 +84,7 @@ declare class ReactFileInput extends Component<
 > {
   id: string
   controlled: boolean
+  inputComp: FileInput
 
   constructor(props: ReactFileInputProps)
 

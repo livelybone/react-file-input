@@ -8,6 +8,7 @@ export default class FileInput extends Component<
 > {
   state = {}
   inputEl!: HTMLInputElement
+  labelEl!: HTMLLabelElement
 
   render() {
     const { id, accept, tip, readonly, onChange } = this.props
@@ -15,6 +16,7 @@ export default class FileInput extends Component<
       <label
         className={`react-file-input${tip ? ' has-tip' : ''}`}
         htmlFor={id}
+        ref={el => (this.labelEl = el!)}
       >
         <Add />
         {tip && <span className="react-file-input-tip">{tip}</span>}

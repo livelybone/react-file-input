@@ -1,10 +1,10 @@
+import simpleUniqueId from '@livelybone/simple-unique-id'
+import { blobToBase64 } from 'base64-blob'
 import React, { Component } from 'react'
 import { DisplayFile, ReactFileInputProps } from '../utils/types'
-import FileInput from './FileInput'
-import simpleUniqueId from '@livelybone/simple-unique-id'
-import FileDisplay from './FileDisplay'
-import { blobToBase64 } from 'base64-blob'
 import { convertFiles, isImg } from '../utils/utils'
+import FileDisplay from './FileDisplay'
+import FileInput from './FileInput'
 
 export default class ReactFileInput extends Component<
   ReactFileInputProps,
@@ -12,6 +12,7 @@ export default class ReactFileInput extends Component<
 > {
   id!: string
   controlled = false
+  inputComp!: FileInput
 
   constructor(props: ReactFileInputProps) {
     super(props)
@@ -58,12 +59,10 @@ export default class ReactFileInput extends Component<
         ? blobToBase64(file)
         : Promise.resolve('')
       ).then(url => {
-        if (!this.props.multiple)
-          this.setFiles([{ file, url, name: file.name }])
+        const $file = { file, url, name: file.name }
+        if (!this.props.multiple) this.setFiles([$file])
         else {
-          this.setFiles(
-            this.state.files.concat([{ file, url, name: file.name }]),
-          )
+          this.setFiles(this.state.files.concat($file))
         }
       })
     }
@@ -82,7 +81,14 @@ export default class ReactFileInput extends Component<
   }
 
   render() {
-    const { beforeDelete, onFileClick, multiple, readonly, tip } = this.props
+    const {
+      beforeDelete,
+      onFileClick,
+      multiple,
+      readonly,
+      tip,
+      accept,
+    } = this.props
 
     const files = multiple ? this.state.files : this.state.files.slice(0, 1)
 
@@ -96,17 +102,21 @@ export default class ReactFileInput extends Component<
           this.setFiles(this.state.files.filter((f, index) => index !== i))
         }
         beforeDelete={() => (beforeDelete ? beforeDelete(file) : true)}
-        onFileClick={() =>
-          onFileClick && onFileClick(file, i, this.state.files)
-        }
+        onFileClick={() => {
+          if (onFileClick) {
+            onFileClick(file, i, this.state.files)
+          }
+        }}
       />
     ))
 
     const input = (
       <FileInput
         id={this.id}
+        ref={comp => (this.inputComp = comp!)}
         tip={tip}
         readonly={readonly}
+        accept={accept}
         onChange={this.fileInput.bind(this)}
       />
     )
