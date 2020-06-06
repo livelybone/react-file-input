@@ -26,6 +26,7 @@ interface FileInputProps {
 interface FileDisplayProps {
   file: DisplayFile
   uploading: boolean
+  readonly: boolean
   uploadingContent: ReactNode
 
   beforeDelete(): Promise<boolean> | boolean

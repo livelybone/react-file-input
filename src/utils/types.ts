@@ -24,6 +24,8 @@ export interface FileDisplayProps {
 
   uploading: boolean
 
+  readonly: boolean
+
   uploadingContent: ReactNode
 
   beforeDelete(): Promise<boolean> | boolean

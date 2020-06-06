@@ -8,6 +8,7 @@ export default class FileDisplay extends Component<FileDisplayProps> {
     const {
       file,
       uploading,
+      readonly,
       uploadingContent,
       beforeDelete,
       onDelete,
@@ -30,16 +31,18 @@ export default class FileDisplay extends Component<FileDisplayProps> {
           <FileImg onClick={onFileClick} />
         )}
         <span className="react-file-info-wrapper">
-          <span
-            className="react-file-del-icon"
-            onClick={() => {
-              Promise.resolve(beforeDelete()).then(
-                should => should && onDelete(),
-              )
-            }}
-          >
-            <Delete />
-          </span>
+          {!readonly && (
+            <span
+              className="react-file-del-icon"
+              onClick={() => {
+                Promise.resolve(beforeDelete()).then(
+                  should => should && onDelete(),
+                )
+              }}
+            >
+              <Delete />
+            </span>
+          )}
           {file.name && <span className="react-file-name">{file.name}</span>}
         </span>
         {uploading && <div className="uploading">{uploadingContent}</div>}

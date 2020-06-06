@@ -97,6 +97,7 @@ export default class ReactFileInput extends Component<
         file={file}
         key={i}
         uploading={!!this.props.uploading && i === files.length - 1}
+        readonly={!!this.props.readonly}
         uploadingContent={this.props.uploadingContent || 'uploading...'}
         onDelete={() =>
           this.setFiles(this.state.files.filter((f, index) => index !== i))

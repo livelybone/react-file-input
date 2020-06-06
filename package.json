@@ -1,6 +1,6 @@
 {
   "name": "@livelybone/react-file-input",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "A file input component of React, support multiple inputs",
   "main": "./lib/umd/index.js",
   "module": "./lib/es/index.js",
