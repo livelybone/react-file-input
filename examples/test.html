@@ -29,25 +29,36 @@ const module = document.getElementById('module')
 const Comp = ReactFileInput
 
 const App = () => {
+  const [multiple, setMultiple] = React.useState(false)
+  const [loading, setLoading] = React.useState(false)
   const [state, setState] = React.useState({})
   const [files, setFiles] = React.useState([{ name: '123', url: '123' }])
 
   return (
     <div>
+      <div>
+        <button onClick={() => setMultiple(false)}>单选</button>
+        <button onClick={() => setMultiple(true)}>多选</button>
+      </div>
       <Comp
         accept="image/png"
         tip="upload tips"
         files={files}
-        multiple={true}
-        uploading={false}
+        multiple={multiple}
+        uploading={loading}
         // readonly={true}
-        beforeDelete={() => new Promise(res => setTimeout(() => res(true), 1000))}
+        // beforeDelete={() => new Promise(res => setTimeout(() => res(true), 1000))}
         onChange={(val) => {
-          setFiles(val)
+          setLoading(true)
           console.log(val)
+          setTimeout(() => {
+            setFiles(val)
+            setLoading(false)
+          }, 3000)
         }}
         onFileClick={(file, i, files) => console.log(file, i, files)}
       />
+      <br />
     </div>
   )
 }
